@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" 
+    content="width=device-width, initial-scale=1.0">
+    <title>WCST</title>
+</head>
+<body>
+    <form method="POST">
+        {% if result %}
+            <p>Result: {{ result }}</p>
+        {% endif %}
+        <p>N_Correct: {{ score }} / N_Trial: {{ n }}
+        <p>Select a card which you guess is correct.</p>
+        {% for img_name in img_list %}
+            <img id="img{{ loop.index }}" 
+            src="/static/imgs/{{ img_name }}" 
+            value="{{ img_name }}" 
+            width="128px" height="128px" 
+            onclick="cardSelected('{{ loop.index }}')">
+        {% endfor %}
+        <p id="label_selected" 
+        style="display:none">You selected:</p>
+        <input type="hidden" id="selected" name="selected">
+        <img id="img_selected" 
+        width="128px" height="128px" style="display:none">
+        <br>
+        <input type="submit" id="submit" value="Submit" 
+        style="display:none">
+    </form>
+
+    <script>
+        function cardSelected(idx) {
+            var img = document.getElementById("img" + idx);
+            var label_selected = document.getElementById(
+                "label_selected");
+            label_selected.style = "";
+            var submit = document.getElementById("submit");
+            submit.style = "";
+            var img_selected = document.getElementById(
+                "img_selected");
+            img_selected.src = img.src;
+            img_selected.style = "";
+            var selected = document.getElementById("selected");
+            var card = img.src.split('/')
+            card = card[card.length - 1]
+            selected.value = card;
+        }
+    </script>
+</body>
+</html>

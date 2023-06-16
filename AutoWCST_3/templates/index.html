@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" 
+    content="width=device-width, initial-scale=1.0">
+    <title>AutoWCST</title>
+</head>
+<body>
+    <form method="POST">
+        <p>N_Correct: {{ score }} / N_Trial: {{ n }}</p>
+        <p>Select a card which you guess is correct.</p>
+        {% for img_name in img_list %}
+            <img id="img{{ loop.index }}" 
+            src="/static/imgs/{{ img_name }}" 
+            value="{{ img_name }}" 
+            width="128px" height="128px" 
+            onclick="cardSelected('{{ loop.index }}')">
+        {% endfor %}
+        <p>Correct card attribute: {{ correct_card_attribute }}</p>
+        <p>Predicted correct attribute: {{ pred_correct_attr }}</p>
+        <p id="label_selected">Agent selected:</p>
+        <input type="hidden" id="selected" name="selected">
+        <img id="img_selected" 
+        src="/static/imgs/{{ selected_card_img }}" 
+        width="128px" height="128px">
+        <br>
+        <p>Result: {{ result }}</p>
+        <p>Predicted correct state:</p>  
+        <p>
+        {% for k, v in dict_pred_correct_feature.items() %}
+            {% if loop.index0 % 5 == 0 and loop.index0 != 0 %}
+            </p>
+            <p>
+            {% endif %}
+            {{ k }}: {{ v }}
+        {% endfor %}
+        </p>
+        <p>Anomaly value: {{ anomaly_value }}</p>
+        <p>Is anomaly detected: {{ is_anomaly }}</p>
+        <input type="submit" id="submit" value="Submit">
+    </form>
+</body>
+</html>
